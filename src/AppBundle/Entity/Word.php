@@ -21,7 +21,6 @@ class Word
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\ManyToMany(targetEntity="Word", mappedBy="trans")
      */
     private $id;
 
@@ -40,15 +39,20 @@ class Word
     private $description;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Word", mappedBy="myTranslation")
+     */
+    private $otherTranslation;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Word", inversedBy="id")
+     * @ORM\ManyToMany(targetEntity="Word", inversedBy="otherTranslation")
      * @ORM\JoinTable(name="translation",
      *     joinColumns={@ORM\JoinColumn(name="word_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="translation_word_id", referencedColumnName="id")}
      * )
      */
-    private $translation;
+    private $myTranslation;
 
     /**
      * @var string
@@ -72,8 +76,8 @@ class Word
      */
     public function __construct()
     {
-        $this->id = new ArrayCollection();
-        $this->translation = new ArrayCollection();
+        $this->otherTranslation = new ArrayCollection();
+        $this->myTranslation = new ArrayCollection();
     }
 
     /**
@@ -204,27 +208,34 @@ class Word
     }
 
     /**
-     * Add translation
+     * Add myTranslation
      *
-     * @param \AppBundle\Entity\Word $translation
+     * @param \AppBundle\Entity\Word $myTranslation
      *
-     * @return Word
      */
-    public function addTranslation(\AppBundle\Entity\Word $translation)
+    public function addMyTranslation(\AppBundle\Entity\Word $myTranslation)
     {
-        $this->translation[] = $translation;
-
-        return $this;
+        $this->myTranslation[] = $myTranslation;
     }
 
     /**
-     * Get translation
+     * Remove myTranslation
+     *
+     * @param \AppBundle\Entity\Word $myTranslation
+     */
+    public function removeMyTranslation(\AppBundle\Entity\Word $myTranslation)
+    {
+        $this->myTranslation->removeElement($myTranslation);
+    }
+
+    /**
+     * Get myTranslation
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTranslation()
+    public function getMyTranslation()
     {
-        return $this->translation;
+        return $this->myTranslation;
     }
 
     public function __toString()
@@ -232,6 +243,15 @@ class Word
         return $this->getWord();
     }
 
-
+    /**
+     * Add otherTranslation
+     *
+     * @param \AppBundle\Entity\Word $otherTranslation
+     *
+     */
+    public function addOtherTranslation(\AppBundle\Entity\Word $otherTranslation)
+    {
+        $this->otherTranslation[] = $otherTranslation;
+    }
 }
 

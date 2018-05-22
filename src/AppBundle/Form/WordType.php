@@ -5,8 +5,9 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Word;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,8 +19,24 @@ class WordType extends AbstractType
             ->add('word')
             ->add('description')
             ->add('language')
-            ->add('translation')
+//            ->add('translation', TranslationType::class)
+            ->add('myTranslation', TranslationType::class)
+
             ->add('save', SubmitType::class, array('label' => 'Create New Word'))
+        ;
+
+        $builder->get('myTranslation')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($tagsAsArray) {
+                    dump($tagsAsArray);
+                    // transform the array to a string
+                    return implode(', ', $tagsAsArray);
+                },
+                function ($tagsAsString) {
+                    // transform the string back to an array
+                    return explode(', ', $tagsAsString);
+                }
+            ))
         ;
     }
 

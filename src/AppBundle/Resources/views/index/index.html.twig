@@ -4,12 +4,17 @@
             <h2>{{ word.word }}</a></h2>
         </header>
         <div class="">
-            <p>{{ word.description(500) }}</p>
-            <p>{{ word.translation(500) }}</p>
+            <p>{{ word.description }}</p>
+            <p>{{ dump(word) }}</p>
+            {#<p>{{ word.translation }}</p>#}
+            <p> {% for tran in word.myTranslation %}
+                    {{ dump(tran) }}
+                    {{ tran.word }}
+                {% endfor %}</p>
             <p>{{ word.language }}</p>
         </div>
         <div class="date">
-            <time datetime="{{ word.createdat|date('c') }}">{{ word.createdat|date('l, F j, Y') }}</time></div>
+            <time datetime="{{ word.createdat|date('c') }}">Created at {{ word.createdat|date('l, F j, Y') }}</time></div>
     </article>
 {% else %}
     <p>There are no words entries yet</p>

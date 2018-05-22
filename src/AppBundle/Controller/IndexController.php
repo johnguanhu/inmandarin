@@ -38,8 +38,13 @@ class IndexController extends Controller
         $form = $this->createForm(WordType::class, $word);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+
+            dump($word);
+
             $entityManager->persist($word);
             $entityManager->flush();
 
