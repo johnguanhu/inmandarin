@@ -1,0 +1,22 @@
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{#{% block body %}#}
+    {#<h1>Add new word:</h1>#}
+    {#{{ form(form) }}#}
+{#{% endblock %}#}
+
+<form action="{{ path('add_word') }}" method="POST" class="word" novalidate enctype="multipart/form-data">
+
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    {{ form_widget(form) }}
+
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+    {{ form_end(form) }}
+</form>

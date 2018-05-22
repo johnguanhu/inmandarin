@@ -1,0 +1,16 @@
+{% for word in words %}
+    <article class="word">
+        <header>
+            <h2>{{ word.word }}</a></h2>
+        </header>
+        <div class="">
+            <p>{{ word.description(500) }}</p>
+            <p>{{ word.translation(500) }}</p>
+            <p>{{ word.language }}</p>
+        </div>
+        <div class="date">
+            <time datetime="{{ word.createdat|date('c') }}">{{ word.createdat|date('l, F j, Y') }}</time></div>
+    </article>
+{% else %}
+    <p>There are no words entries yet</p>
+{% endfor %}
