@@ -74,7 +74,7 @@ class IndexController extends Controller
 //
 //            $word->addMyTranslation($word2);
 
-            dump($word);
+//            var_dump($word);
 
             $entityManager->persist($word);
             $entityManager->flush();
