@@ -35,6 +35,26 @@ class IndexController extends Controller
 
         $word = new Word();
 
+//        $word->setWord('love');
+//        $word->setDescription('love');
+//        $word->setLanguage('love');
+
+//        $word2 = new Word();
+
+//        $word2->setWord('hate');
+//        $word2->setDescription('hate');
+//        $word2->setLanguage('hate');
+//        $word->addMyTranslation($word2);
+
+
+//        $entityManager = $this->getDoctrine()->getManager();
+//
+//        dump($word);
+//
+//        $entityManager->persist($word);
+//        $entityManager->flush();
+
+
         $form = $this->createForm(WordType::class, $word);
         $form->handleRequest($request);
 
@@ -42,6 +62,17 @@ class IndexController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+
+//            $word2 = new Word();
+//
+//            $word2->setWord($word->getMyTranslation()->toArray()['word']);
+//            $word2->setDescription($word->getMyTranslation()->toArray()['description']);
+//            $word2->setLanguage($word->getMyTranslation()->toArray()['language']);
+//
+//
+//            $word->clearTransaction();
+//
+//            $word->addMyTranslation($word2);
 
             dump($word);
 

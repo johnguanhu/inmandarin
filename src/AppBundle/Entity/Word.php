@@ -215,6 +215,7 @@ class Word
      */
     public function addMyTranslation(\AppBundle\Entity\Word $myTranslation)
     {
+        $myTranslation->addOtherTranslation($this); // synchronously updating inverse side
         $this->myTranslation[] = $myTranslation;
     }
 
@@ -253,5 +254,11 @@ class Word
     {
         $this->otherTranslation[] = $otherTranslation;
     }
+
+    public function clearTransaction()
+    {
+        $this->myTranslation = [];
+    }
+
 }
 

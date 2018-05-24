@@ -33,3 +33,10 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+
+    AppBundle\Entity\DataTransformer\ArrayToEntity:
+        # redundant thanks to _defaults, but value is overridable on each service
+        autowire: true
+        # not required, will help in our example
+        public: true

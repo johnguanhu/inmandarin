@@ -2,25 +2,31 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\DataTransformer\ArrayToEntity;
 use AppBundle\Entity\Word;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TranslationType extends AbstractType
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('word')
 //            ->add('description')
 //            ->add('language')
+
         ;
 
-//        $builder->get('myTranslation')
+//        $builder->get('word')
 //            ->addModelTransformer(new CallbackTransformer(
 //                function ($tagsAsArray) {
+//
 //                    dump($tagsAsArray);
 //                    // transform the array to a string
 //                    return implode(', ', $tagsAsArray);
@@ -31,6 +37,9 @@ class TranslationType extends AbstractType
 //                }
 //            ))
 //        ;
+
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
