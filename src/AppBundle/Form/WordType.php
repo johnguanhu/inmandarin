@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AppBundle\Form;
 
 use AppBundle\Entity\DataTransformer\ArrayToEntity;
@@ -15,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WordType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -28,14 +26,12 @@ class WordType extends AbstractType
 //                'allow_add'    => true,
 //                'entry_options' => array('label' => false),
 //            ))
-
             ->add('save', SubmitType::class, array('label' => 'Create New Word'))
         ;
 
-//        $builder->get('word')
+//        $builder->get('myTranslation')
 //            ->addModelTransformer(new CallbackTransformer(
 //                function ($tagsAsArray) {
-//
 //                    dump($tagsAsArray);
 //                    // transform the array to a string
 //                    return implode(', ', $tagsAsArray);

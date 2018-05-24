@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
 {{ form_start(form) }}
     {{ form_row(form.word) }}
     {{ form_row(form.description) }}
@@ -21,13 +20,10 @@
     {#</ul>#}
 
 
-
-
-
 {{ form_end(form) }}
 
 
-<form action="{{ path('add_word') }}" method="POST" class="word" novalidate enctype="multipart/form-data">
+{#<form action="{{ path('add_word') }}" method="POST" class="word" novalidate enctype="multipart/form-data">#}
 
 
 
@@ -44,5 +40,5 @@
         {#<input type="submit" value="Submit">#}
     {#</p>#}
     {#{{ form_end(form) }}#}
-</form>
+{#</form>#}
     {% endblock %}

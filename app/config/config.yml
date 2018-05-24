@@ -65,3 +65,11 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+easy_admin:
+    site_name: 'InMandarin Admin Panel'
+    design:
+        brand_color: '#1ABC9C'
+    entities:
+        # change the following to the namespaces of your own entities
+        - AppBundle\Entity\Word

@@ -6,6 +6,7 @@ use AppBundle\Entity\Word;
 use AppBundle\Form\WordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
@@ -16,14 +17,12 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
-
-        $words = $this->getDoctrine()
-            ->getRepository('AppBundle:Word')
-            ->findAll();
-
+//        $words = $this->getDoctrine()
+//            ->getRepository('AppBundle:Word')
+//            ->findAll();
 
         return $this->render('@App/index/index.html.twig', array(
-            'words' => $words,
+//            'words' => $words,
         ));
     }
 
@@ -32,7 +31,6 @@ class IndexController extends Controller
      */
     public function createAction(Request $request)
     {
-
         $word = new Word();
 
 //        $word->setWord('love');
@@ -54,11 +52,8 @@ class IndexController extends Controller
 //        $entityManager->persist($word);
 //        $entityManager->flush();
 
-
         $form = $this->createForm(WordType::class, $word);
         $form->handleRequest($request);
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -89,5 +84,38 @@ class IndexController extends Controller
             'form' => $form->createView(),
         ]);
 
+    }
+
+    public function searchAction()
+    {
+        $form = $this->createFormBuilder(null)
+            ->add('search', TextType::class)
+            ->getForm();
+
+        return $this->render('@App/index/search.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="handleSearch")
+     */
+    public function handleSearch(Request $request)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Word');
+
+        $search = $request->request->get('form')['search'];
+
+        if ($search) {
+            $words = $repository->findByWord($search);
+        } else {
+            $words = $repository->findAll();
+        }
+
+        return $this->render('@App/index/index.html.twig', array(
+            'words' => $words,
+        ));
     }
 }
