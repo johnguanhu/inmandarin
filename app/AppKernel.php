@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
 
             new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new Pryon\GoogleTranslatorBundle\PryonGoogleTranslatorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

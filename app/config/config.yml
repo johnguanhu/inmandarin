@@ -66,6 +66,9 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
+pryon_google_translator:
+    google_api_key: AIzaSyA-9Y52hsvVYuYTwGM3ZMQQ2cP1Tpa42QU
+
 easy_admin:
     site_name: 'InMandarin Admin Panel'
     design:

@@ -39,14 +39,14 @@ class Word
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Word", mappedBy="myTranslation")
+     * @ORM\ManyToMany(targetEntity="Word", mappedBy="myTranslation", cascade={"persist"})
      */
     private $otherTranslation;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Word", inversedBy="otherTranslation")
+     * @ORM\ManyToMany(targetEntity="Word", inversedBy="otherTranslation", cascade={"persist"})
      * @ORM\JoinTable(name="translation",
      *     joinColumns={@ORM\JoinColumn(name="word_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="translation_word_id", referencedColumnName="id")}
@@ -255,9 +255,14 @@ class Word
         $this->otherTranslation[] = $otherTranslation;
     }
 
-    public function clearTransaction()
+    /**
+     * Remove otherTranslation
+     *
+     * @param \AppBundle\Entity\Word $otherTranslation
+     */
+    public function removeOtherTranslation(\AppBundle\Entity\Word $otherTranslation)
     {
-        $this->myTranslation = [];
+        $this->otherTranslation->removeElement($otherTranslation);
     }
 
 }

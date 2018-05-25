@@ -21,8 +21,6 @@
     {% endblock %}
 </header>
 
-
-
 <div class="main-content">
     {% for msg in app.session.flashBag.get('success') %}
         <div class="alert alert-success">
@@ -40,6 +38,7 @@
     <p class="footer-text">Demo</p>
 </div>
 {% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 {% endblock %}
 </body>
 </html>

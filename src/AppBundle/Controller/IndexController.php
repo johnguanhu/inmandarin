@@ -21,6 +21,12 @@ class IndexController extends Controller
 //            ->getRepository('AppBundle:Word')
 //            ->findAll();
 
+
+//        $translation = $this->get('pryon.google.translator')->translate('en','zh','Symfony');
+
+
+//        dump($translation);die;
+
         return $this->render('@App/index/index.html.twig', array(
 //            'words' => $words,
         ));
@@ -33,44 +39,11 @@ class IndexController extends Controller
     {
         $word = new Word();
 
-//        $word->setWord('love');
-//        $word->setDescription('love');
-//        $word->setLanguage('love');
-
-//        $word2 = new Word();
-
-//        $word2->setWord('hate');
-//        $word2->setDescription('hate');
-//        $word2->setLanguage('hate');
-//        $word->addMyTranslation($word2);
-
-
-//        $entityManager = $this->getDoctrine()->getManager();
-//
-//        dump($word);
-//
-//        $entityManager->persist($word);
-//        $entityManager->flush();
-
         $form = $this->createForm(WordType::class, $word);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
-//            $word2 = new Word();
-//
-//            $word2->setWord($word->getMyTranslation()->toArray()['word']);
-//            $word2->setDescription($word->getMyTranslation()->toArray()['description']);
-//            $word2->setLanguage($word->getMyTranslation()->toArray()['language']);
-//
-//
-//            $word->clearTransaction();
-//
-//            $word->addMyTranslation($word2);
-
-//            var_dump($word);
-
             $entityManager->persist($word);
             $entityManager->flush();
 
@@ -117,5 +90,19 @@ class IndexController extends Controller
         return $this->render('@App/index/index.html.twig', array(
             'words' => $words,
         ));
+    }
+
+    public function translateAction(Request $request)
+    {
+        $langFrom = $request->get('language');
+        $word = $request->get('word');
+
+        if($langFrom === 'en'){
+            $translation = $this->get('pryon.google.translator')->translate('en','zh', $word);
+        }else{
+            $translation = $this->get('pryon.google.translator')->translate('zh','en', $word);
+        }
+
+        return $translation;
     }
 }

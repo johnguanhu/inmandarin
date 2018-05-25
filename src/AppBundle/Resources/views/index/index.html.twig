@@ -7,6 +7,13 @@
         'AppBundle:Index:search'
         )) }}
     </div>
+
+    <div class="">
+        <p><a href="{{ path('add_word') }}">Add New Word</a></p>
+    </div>
+    <div class="">
+        <p><a href="{{ path('admin') }}">Admin Panel</a></p>
+    </div>
     {% if words is defined %}
 
         {% for word in words %}
@@ -16,7 +23,7 @@
                     <h3>word - {{ word.word }}</a></h3>
                 </header>
                 <div class="">
-                    <p>description - {{ word.description }}</p>
+                    {#<p>description - {{ word.description }}</p>#}
                     <p>language - {{ word.language }}</p>
                     {#<p>{{ word.translation }}</p>#}
                     <p> {% for tran in word.myTranslation %}
