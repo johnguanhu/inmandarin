@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Word
@@ -28,6 +28,7 @@ class Word
      * @var string
      *
      * @ORM\Column(name="word", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $word;
 
@@ -58,6 +59,7 @@ class Word
      * @var string
      *
      * @ORM\Column(name="language", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $language;
 

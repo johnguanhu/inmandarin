@@ -7,6 +7,7 @@ use AppBundle\Form\WordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller
@@ -20,12 +21,6 @@ class IndexController extends Controller
 //        $words = $this->getDoctrine()
 //            ->getRepository('AppBundle:Word')
 //            ->findAll();
-
-
-//        $translation = $this->get('pryon.google.translator')->translate('en','zh','Symfony');
-
-
-//        dump($translation);die;
 
         return $this->render('@App/index/index.html.twig', array(
 //            'words' => $words,
@@ -47,6 +42,8 @@ class IndexController extends Controller
             $entityManager->persist($word);
             $entityManager->flush();
 
+            $this->addFlash('success', 'New word was succesfully created');
+
             return $this->redirect($this->generateUrl('homepage', [
                 'id' => $word->getId()
             ]));
@@ -55,6 +52,8 @@ class IndexController extends Controller
         return $this->render('@App/index/form.html.twig', [
             'word' => $word,
             'form' => $form->createView(),
+            'action' => $this->generateUrl('translate'),
+            'method' => 'POST',
         ]);
 
     }
@@ -92,6 +91,9 @@ class IndexController extends Controller
         ));
     }
 
+    /**
+     * @Route("/translate", name="translate")
+     */
     public function translateAction(Request $request)
     {
         $langFrom = $request->get('language');
@@ -103,6 +105,11 @@ class IndexController extends Controller
             $translation = $this->get('pryon.google.translator')->translate('zh','en', $word);
         }
 
-        return $translation;
+        $data = [
+            'status'=>'ok',
+            'translation'=> $translation
+        ];
+
+        return new JsonResponse($data);
     }
 }

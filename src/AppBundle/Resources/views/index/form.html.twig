@@ -9,11 +9,10 @@
     {#{{ form_row(form.description) }}#}
     {{ form_row(form.language) }}
     <ul class="tags" data-prototype="{{ form_widget(form.myTranslation.vars.prototype)|e('html_attr') }}">
-        {% for trans in form.myTranslation %}
-            <li>{{ form_row(trans) }}</li>
-        {% endfor %}
+        {#{% for trans in form.myTranslation %}#}
+            {#<li>{{ form_row(trans) }}</li>#}
+        {#{% endfor %}#}
     </ul>
-
 {{ form_end(form) }}
 {% endblock %}
 
@@ -42,6 +41,10 @@
 
             // Display the form in the page in an li, before the "Add a tag" link li
             var $newFormLi = $('<li></li>').append(newForm);
+
+            var $translateButton = $('<button class="googleButton">Add Google Translation</button>');
+
+            $newFormLi.find('.google_word_2').parent().append($translateButton);
             $newLinkLi.before($newFormLi);
         }
 
@@ -69,6 +72,29 @@
                 // add a new tag form (see next code block)
                 addTagForm($collectionHolder, $newLinkLi);
             });
+
+            $('html').on('click', '.googleButton', function(){
+                var language = $('body').find('select.google_lang').val();
+                var word = $('body').find('input.google_word').val();
+                var word2_field = $(this).parent().find('input.google_word_2');
+
+                $.ajax({
+                    method: 'GET',
+                    url: '{{ path('translate') }}',
+                    data: {word: word, language: language}
+                })
+                    .done(function (data) {
+                        word2_field.val('');
+                        word2_field.val(data.translation);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        word2_field.val(jqXHR.responseJSON);
+                    })
+                    .always(function (data) {
+
+                    });
+                return false;
+            })
         });
     </script>
 {% endblock %}

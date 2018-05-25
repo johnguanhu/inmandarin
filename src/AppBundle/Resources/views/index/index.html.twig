@@ -1,18 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="">
-        <p></p>
+    <div style="margin: 30px;" class="">
         {{ render(controller(
         'AppBundle:Index:search'
         )) }}
     </div>
-
-    <div class="">
+    <div style="margin: 30px;" class="">
         <p><a href="{{ path('add_word') }}">Add New Word</a></p>
-    </div>
-    <div class="">
-        <p><a href="{{ path('admin') }}">Admin Panel</a></p>
     </div>
     {% if words is defined %}
 
@@ -25,7 +20,6 @@
                 <div class="">
                     {#<p>description - {{ word.description }}</p>#}
                     <p>language - {{ word.language }}</p>
-                    {#<p>{{ word.translation }}</p>#}
                     <p> {% for tran in word.myTranslation %}
                             translation - {{ tran.word }}
                         {% endfor %}</p>
