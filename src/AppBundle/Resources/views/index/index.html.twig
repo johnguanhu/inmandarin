@@ -6,35 +6,53 @@
         'AppBundle:Index:search'
         )) }}
     </div>
-    <div style="margin: 30px;" class="">
-        <p><a href="{{ path('add_word') }}">Add New Word</a></p>
-    </div>
+    {#<div style="margin: 30px;" class="">#}
+        {#<p><a href="{{ path('add_word') }}">Add New Word</a></p>#}
+    {#</div>#}
     {% if words is defined %}
 
         {% for word in words %}
-            <article class="word">
+            <article style="text-align: center;" class="word">
 
                 <header>
-                    <h3>word - {{ word.word }}</a></h3>
+                    {#<h3>{{ word.word }}</h3>#}
+                    <h3>{% for tran in word.myTranslation %}
+                        {{ tran.word }}
+                        {#{{ tran.word }} <a id="confirm" data-prototype="" href="{{ path('add_word', {'word': tran }) }}">confirm</a> <a href="{{ path('add_word') }}">edit</a>#}
+                    {% endfor %}</h3>
+                    <h3>{% for tran in word.otherTranslation %}
+                            {{ tran.word }}
+                            {#{{ tran.word }} <a id="confirm" data-prototype="" href="{{ path('add_word', {'word': tran }) }}">confirm</a> <a href="{{ path('add_word') }}">edit</a>#}
+                        {% endfor %}</h3>
                 </header>
-                <div class="">
+                {#<div class="">#}
                     {#<p>description - {{ word.description }}</p>#}
-                    <p>language - {{ word.language }}</p>
-                    <p> {% for tran in word.myTranslation %}
-                            translation - {{ tran.word }}
-                        {% endfor %}</p>
-                </div>
-                <div class="date">
-                    <time datetime="{{ word.createdat|date('c') }}">Created at {{ word.createdat|date('l, F j, Y') }}</time>
-                </div>
-                <div class="">
-                    <p>----------------------------------------</p>
-                </div>
+                    {#<p>language - {{ word.language }}</p>#}
+                    {#<p> {% for tran in word.myTranslation %}#}
+                            {#translation - {{ tran.word }}#}
+                        {#{% endfor %}</p>#}
+                {#</div>#}
+                {#<div class="date">#}
+                    {#<time datetime="{{ word.createdat|date('c') }}">Created at {{ word.createdat|date('l, F j, Y') }}</time>#}
+                {#</div>#}
+                {#<div class="">#}
+                    {#<p>----------------------------------------</p>#}
+                {#</div>#}
             </article>
         {% else %}
             <p>There are no words entries yet</p>
         {% endfor %}
 
         {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $("#confirm").click(function() {
+        });
+    </script>
 
 {% endblock %}

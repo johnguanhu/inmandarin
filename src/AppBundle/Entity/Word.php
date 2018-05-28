@@ -267,5 +267,15 @@ class Word
         $this->otherTranslation->removeElement($otherTranslation);
     }
 
+    /**
+     * Get otherTranslation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOtherTranslation()
+    {
+        return $this->otherTranslation;
+    }
+
 }
 
