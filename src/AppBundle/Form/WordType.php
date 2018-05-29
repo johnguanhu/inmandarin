@@ -31,7 +31,13 @@ class WordType extends AbstractType
                 'allow_delete' => true,
                 'entry_options' => array('label' => false),
             ))
-            ->add('save', SubmitType::class, array('label' => 'Create New Word'))
+            ->add('otherTranslation', CollectionType::class, array(
+                'entry_type' => TranslationType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'entry_options' => array('label' => false),
+            ))
+            ->add('save', SubmitType::class, array('label' => 'Save Word'))
         ;
     }
 

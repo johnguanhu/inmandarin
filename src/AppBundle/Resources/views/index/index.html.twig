@@ -15,14 +15,13 @@
             <article style="text-align: center;" class="word">
 
                 <header>
-                    {#<h3>{{ word.word }}</h3>#}
+                    <h3>{{ word.word }}</h3>
                     <h3>{% for tran in word.myTranslation %}
-                        {{ tran.word }}
-                        {#{{ tran.word }} <a id="confirm" data-prototype="" href="{{ path('add_word', {'word': tran }) }}">confirm</a> <a href="{{ path('add_word') }}">edit</a>#}
+                        {{ tran.word }} <a href="{{ path('edit', {'id': word.id}) }}">edit</a>
+                        {#{{ tran.word }} <a id="confirm" href="{{ path('add_word', {'word': word.word, 'word_lang': word.language, 'word_trans': tran.word, 'trans_lang': tran.language }) }}">confirm</a> <a href="{{ path('edit', {'id': word.id}) }}">edit</a>#}
                     {% endfor %}</h3>
                     <h3>{% for tran in word.otherTranslation %}
-                            {{ tran.word }}
-                            {#{{ tran.word }} <a id="confirm" data-prototype="" href="{{ path('add_word', {'word': tran }) }}">confirm</a> <a href="{{ path('add_word') }}">edit</a>#}
+                            {{ tran.word }} <a href="{{ path('edit', {'id': word.id}) }}">edit</a>
                         {% endfor %}</h3>
                 </header>
                 {#<div class="">#}
@@ -44,15 +43,5 @@
         {% endfor %}
 
         {% endif %}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-
-        $("#confirm").click(function() {
-        });
-    </script>
 
 {% endblock %}

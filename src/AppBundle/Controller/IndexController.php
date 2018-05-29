@@ -4,13 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Word;
 use AppBundle\Form\WordType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -22,9 +20,6 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
-//        $words = $this->getDoctrine()
-//            ->getRepository('AppBundle:Word')
-//            ->findAll();
 
         return $this->render('@App/index/index.html.twig', array(
 //            'words' => $words,
@@ -96,35 +91,34 @@ class IndexController extends Controller
 
         if (!$search && !$language) {
             throw new NotFoundHttpException('Incorrect Data');
-        }else{
-            $words = $repository->findByWord($search);
-            if(!$words){
-                $entityManager = $this->getDoctrine()->getManager();
-                $word = new Word();
-                $translation = new Word();
-                if($language === 'en'){
-                    $word->setWord($search);
-                    $word->setLanguage('en');
+        }
+        $words = $repository->findByWord($search);
+        $entityManager = $this->getDoctrine()->getManager();
 
-                    $translation->setWord($this->get('pryon.google.translator')->translate('en','zh', $search));
-                    $translation->setLanguage('zh');
+        if(!$words){
+            $word = new Word();
+            $translation = new Word();
+            if($language === 'en'){
+                $word->setWord($search);
+                $word->setLanguage('en');
 
-                    $word->addMyTranslation($translation);
+                $translation->setWord(strtolower($this->get('pryon.google.translator')->translate('en','zh', $search)));
+                $translation->setLanguage('zh');
 
-                }else{
-                    $word->setWord($search);
-                    $word->setLanguage('zh');
+                $word->addMyTranslation($translation);
+            }else{
+                $word->setWord($search);
+                $word->setLanguage('zh');
 
-                    $translation->setWord($this->get('pryon.google.translator')->translate('zh','en', $search));
-                    $translation->setLanguage('en');
+                $translation->setWord(strtolower($this->get('pryon.google.translator')->translate('zh','en', $search)));
+                $translation->setLanguage('en');
 
-                    $word->addMyTranslation($translation);
-                }
-                $entityManager->persist($word);
-                $entityManager->flush();
-
-                $words[] = $word;
+                $word->addMyTranslation($translation);
             }
+            $entityManager->persist($word);
+            $entityManager->flush();
+
+            $words[] = $word;
         }
 
         return $this->render('@App/index/index.html.twig', array(
@@ -132,27 +126,39 @@ class IndexController extends Controller
         ));
     }
 
-
-
     /**
-     * @Route("/translate", name="translate")
+     * @Route("/edit", name="edit")
      */
-    public function translateAction(Request $request)
+    public function editAction(Request $request)
     {
-        $langFrom = $request->get('language');
-        $word = $request->get('word');
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Word');
 
-        if($langFrom === 'en'){
-            $translation = $this->get('pryon.google.translator')->translate('en','zh', $word);
-        }else{
-            $translation = $this->get('pryon.google.translator')->translate('zh','en', $word);
+        $word = $repository->findOneById($request->get('id'));
+
+        if (!$word) {
+            throw new NotFoundHttpException('No Word found!');
         }
 
-        $data = [
-            'status'=>'ok',
-            'translation'=> $translation
-        ];
+        $form = $this->createForm(WordType::class, $word);
+        $form->handleRequest($request);
 
-        return new JsonResponse($data);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($word);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Word was succesfuly edited');
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        return $this->render('@App/index/form.html.twig', [
+            'word' => $word,
+            'form' => $form->createView(),
+        ]);
+
     }
 }
