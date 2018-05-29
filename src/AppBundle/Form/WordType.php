@@ -18,13 +18,13 @@ class WordType extends AbstractType
         $builder
             ->add('word', TextType::class, array('attr' => array('class'=>'google_word')))
 //            ->add('description')
-            ->add('language', ChoiceType::class, array(
-                'attr' => array('class'=>'google_lang'),
-                'choices'  => array(
-                    'English' => 'en',
-                    'Chinese' => 'zh',
-                ),
-            ))
+//            ->add('language', ChoiceType::class, array(
+//                'attr' => array('class'=>'google_lang'),
+//                'choices'  => array(
+//                    'English' => 'en',
+//                    'Chinese' => 'zh',
+//                ),
+//            ))
             ->add('myTranslation', CollectionType::class, array(
                 'entry_type' => TranslationType::class,
                 'allow_add'    => true,

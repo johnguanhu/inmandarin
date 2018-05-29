@@ -64,6 +64,14 @@ class Word
     private $language;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="confirmed", type="smallint", length=255)
+     * @Assert\NotBlank()
+     */
+    private $confirmed = 0;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -163,6 +171,23 @@ class Word
     {
         return $this->language;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmed()
+    {
+        return $this->confirmed;
+    }
+
+    /**
+     * @param mixed $confirmed
+     */
+    public function setConfirmed($confirmed)
+    {
+        $this->confirmed = $confirmed;
+    }
+
 
     /**
      * @return mixed

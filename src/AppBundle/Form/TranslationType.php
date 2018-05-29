@@ -21,13 +21,13 @@ class TranslationType extends AbstractType
         $builder
             ->add('word', TextType::class, array('attr' => array('class'=>'google_word_2')))
 //            ->add('description')
-            ->add('language', ChoiceType::class, array(
-                'attr' => array('class'=>'google_lang_2'),
-                'choices'  => array(
-                    'English' => 'en',
-                    'Chinese' => 'zh',
-                ),
-            ))
+//            ->add('language', ChoiceType::class, array(
+//                'attr' => array('class'=>'google_lang_2'),
+//                'choices'  => array(
+//                    'English' => 'en',
+//                    'Chinese' => 'zh',
+//                ),
+//            ))
         ;
     }
 

@@ -6,9 +6,6 @@
         'AppBundle:Index:search'
         )) }}
     </div>
-    {#<div style="margin: 30px;" class="">#}
-        {#<p><a href="{{ path('add_word') }}">Add New Word</a></p>#}
-    {#</div>#}
     {% if words is defined %}
 
         {% for word in words %}
@@ -16,32 +13,33 @@
 
                 <header>
                     <h3>{{ word.word }}</h3>
-                    <h3>{% for tran in word.myTranslation %}
-                        {{ tran.word }} <a href="{{ path('edit', {'id': word.id}) }}">edit</a>
-                        {#{{ tran.word }} <a id="confirm" href="{{ path('add_word', {'word': word.word, 'word_lang': word.language, 'word_trans': tran.word, 'trans_lang': tran.language }) }}">confirm</a> <a href="{{ path('edit', {'id': word.id}) }}">edit</a>#}
-                    {% endfor %}</h3>
+                    <h3>
+                        {% for tran in word.myTranslation %}
+                            {{ tran.word }}
+                            {% if tran.confirmed %}
+                                <p>confirmed</p> <a href="{{ path('edit', {'id': word.id}) }}">edit</a>
+                            {% endif %}
+                            {% if not tran.confirmed %}
+                                <p><a id="confirm" href="{{ path('confirm', {'word': word.word, 'word_lang': word.language, 'word_trans': tran.word, 'trans_lang': tran.language }) }}">confirm</a></p>
+                            {% endif %}
+                        {% endfor %}
+                    </h3>
                     <h3>{% for tran in word.otherTranslation %}
-                            {{ tran.word }} <a href="{{ path('edit', {'id': word.id}) }}">edit</a>
-                        {% endfor %}</h3>
+                            {{ tran.word }}
+                            {% if tran.confirmed %}
+                                <p>confirmed</p> <a href="{{ path('edit', {'id': word.id}) }}">edit</a>
+                            {% endif %}
+                            {% if not tran.confirmed %}
+                                <p><a id="confirm" href="{{ path('confirm', {'word': word.word, 'word_lang': word.language, 'word_trans': tran.word, 'trans_lang': tran.language }) }}">confirm</a></p>
+                            {% endif %}
+                        {% endfor %}
+                    </h3>
                 </header>
-                {#<div class="">#}
-                    {#<p>description - {{ word.description }}</p>#}
-                    {#<p>language - {{ word.language }}</p>#}
-                    {#<p> {% for tran in word.myTranslation %}#}
-                            {#translation - {{ tran.word }}#}
-                        {#{% endfor %}</p>#}
-                {#</div>#}
-                {#<div class="date">#}
-                    {#<time datetime="{{ word.createdat|date('c') }}">Created at {{ word.createdat|date('l, F j, Y') }}</time>#}
-                {#</div>#}
-                {#<div class="">#}
-                    {#<p>----------------------------------------</p>#}
-                {#</div>#}
             </article>
         {% else %}
             <p>There are no words entries yet</p>
         {% endfor %}
 
-        {% endif %}
+    {% endif %}
 
 {% endblock %}

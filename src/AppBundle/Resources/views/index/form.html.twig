@@ -7,7 +7,7 @@
 {{ form_start(form) }}
     {{ form_row(form.word) }}
     {#{{ form_row(form.description) }}#}
-    {{ form_row(form.language) }}
+    {#{{ form_row(form.language) }}#}
     {#<ul class="tags" data-prototype="{{ form_widget(form.myTranslation.vars.prototype)|e('html_attr') }}">#}
 
         <div style="margin: 30px;">
@@ -15,6 +15,10 @@
             <p>Translation:</p>
             {{ form_row(trans) }}
         {% endfor %}
+            {% for trans in form.otherTranslation %}
+                <p>Translation:</p>
+                {{ form_row(trans) }}
+            {% endfor %}
         </div>
     {#</ul>#}
 {{ form_end(form) }}
