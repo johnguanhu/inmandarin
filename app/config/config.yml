@@ -67,7 +67,7 @@ swiftmailer:
     spool: { type: memory }
 
 eko_google_translate:
-    api_key: AIzaSyA-9Y52hsvVYuYTwGM3ZMQQ2cP1Tpa42QU
+    api_key: '%google_api_key%'
 
 easy_admin:
     site_name: 'InMandarin Admin Panel'
